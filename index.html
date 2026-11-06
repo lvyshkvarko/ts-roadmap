@@ -595,7 +595,7 @@ const SORTS = [
   {id:'activity', name:'Последняя активность', f:(a,b)=>(b.lastAct||'').localeCompare(a.lastAct||'')},
   {id:'priority', name:'По приоритету', f:(a,b)=>(PRI[b.p]||0)-(PRI[a.p]||0) || (b.lastAct||'').localeCompare(a.lastAct||'')},
   {id:'stage', name:'По этапу', f:(a,b)=>STAGE_ORD[a.stage]-STAGE_ORD[b.stage] || (PRI[b.p]||0)-(PRI[a.p]||0)},
-  {id:'done', name:'По дате внедрения', f:(a,b)=>(b.doneAt||'').localeCompare(a.doneAt||'')},
+  {id:'done', name:'По дате выполнения', f:(a,b)=>(b.doneAt||'').localeCompare(a.doneAt||'')},
   {id:'created', name:'По дате создания', f:(a,b)=>(b.c||'').localeCompare(a.c||'')},
   {id:'title', name:'По названию', f:(a,b)=>a.title.localeCompare(b.title,'ru')},
 ];
@@ -629,7 +629,7 @@ function footHtml(){
 function lastComment(i){ return i.cm.length ? i.cm[i.cm.length-1] : null; }
 function notesHtml(i){
   let h = '';
-  if (i.stage==='done') h += `<div class="note ok">${ico('check')}<span class="tx">Внедрено <b>${dLong(i.doneAt)}</b></span></div>`;
+  if (i.stage==='done') h += `<div class="note ok">${ico('check')}<span class="tx">Выполнено <b>${dLong(i.doneAt)}</b></span></div>`;
   if (i.deps.length) h += `<div class="note warn">${ico('wait')}<span class="tx">Сначала нужно: ${i.deps.slice(0,2).map(d=>`<b>${esc(d.k)}</b> (${esc(ru(d.st))})`).join(', ')}</span></div>`;
   if (i.shifts.length){ const f=i.shifts[0][1], l=i.shifts[i.shifts.length-1][2]; h += `<div class="note warn">${ico('wait')}<span class="tx">Срок переносился ${i.shifts.length} ${plural(i.shifts.length,'раз','раза','раз')}: <b>${dShort(f)}</b> → <b>${dShort(l)}</b></span></div>`; }
   const c = lastComment(i);
@@ -661,7 +661,7 @@ let ANI = 0;
 const ani = ()=>`--i:${Math.min(ANI++,12)}`;
 function itemHtml(i, kind, view){
   let d = null, note = '';
-  if (kind==='done') { d = i.doneAt; note = 'внедрено'; }
+  if (kind==='done') { d = i.doneAt; note = 'выполнено'; }
   else if (kind==='now') { d = i.since; note = i.stage==='blocked' ? 'в блоке с' : 'в работе с'; }
   else if (i.d) { d = i.d; note = 'срок'; }
   return `<div class="row it" data-open="${esc(i.k)}" style="--c:${SC[i.stage]};${ani()}">${dateBlock(d, note)}<span class="p ${kind==='next'?'hollow':''}"></span>${cardHtml(i, view)}</div>`;
@@ -669,7 +669,7 @@ function itemHtml(i, kind, view){
 function newBadge(i){ return i.fresh ? `<span class="nb" title="Создана ${dLong(i.c)}"><i></i>Новая · ${agoText(i.age)}</span>` : ''; }
 function rowHtml(i, rightOverride){
   let right = '';
-  if (i.stage==='done') right = `<b>${dShort(i.doneAt)}</b>внедрено`;
+  if (i.stage==='done') right = `<b>${dShort(i.doneAt)}</b>выполнено`;
   else if (['wip','review','blocked'].includes(i.stage)) right = `<b>${dShort(i.since)}</b>в этапе с`;
   else if (i.d) right = `<b>${dShort(i.d)}</b>срок`;
   else right = `<b>Дата не определена</b>${esc(PRIO_RU[i.p]||'')} приоритет`;
@@ -705,7 +705,7 @@ function monthEvents(m){
 function evHtml(e){
   const i = e.i;
   let pill = '', info = '';
-  if (e.kind==='done'){ pill = `<span class="pill done" style="--c:var(--c-done)">Внедрено</span>`; info = e.who ? esc(e.who) : ''; }
+  if (e.kind==='done'){ pill = `<span class="pill done" style="--c:var(--c-done)">Выполнено</span>`; info = e.who ? esc(e.who) : ''; }
   else if (e.kind==='st'){ const s = stageOf(e.to); pill = `<span class="pill" style="--c:${SC[s]}">${esc(ru(e.to))}</span>`; info = (e.from?esc(ru(e.from))+' → ':'')+e.chain.map(x=>esc(ru(x))).join(' → ')+(e.who?' · '+esc(e.who):''); }
   else if (e.kind==='due'){
     const lbl = !e.from ? 'Срок назначен' : !e.to ? 'Срок снят' : 'Срок изменён';
@@ -751,7 +751,7 @@ function monthLadder(){
   const mName = MON_F[mo-1]+' '+y;
   return `<div class="month">
     <div class="mhd"><button class="ib" data-mnav="-1" aria-label="Предыдущий месяц"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
-      <div class="mtt"><h3>${mName}</h3><span>${isCur?'карта текущего месяца':isPast?'прошедший месяц':'будущий месяц'} · ${total} ${plural(total,'событие','события','событий')}${cnt('done')?` · внедрено ${cnt('done')}`:''}${cnt('deadline')?` · дедлайнов ${cnt('deadline')}`:''}</span></div>
+      <div class="mtt"><h3>${mName}</h3><span>${isCur?'карта текущего месяца':isPast?'прошедший месяц':'будущий месяц'} · ${total} ${plural(total,'событие','события','событий')}${cnt('done')?` · выполнено ${cnt('done')}`:''}${cnt('deadline')?` · дедлайнов ${cnt('deadline')}`:''}</span></div>
       <button class="ib" data-mnav="1" aria-label="Следующий месяц"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
       ${!isCur?`<button class="mnow" data-mnav="0">Сегодня</button>`:''}</div>
     <div class="tl mtl">${rows}</div>
@@ -885,7 +885,7 @@ function renderCat(id){
         <select class="sel" id="fPerson"><option value="">Все исполнители</option>${people.map(p=>`<option ${F.person===p?'selected':''}>${esc(p)}</option>`).join('')}<option value="—" ${F.person==='—'?'selected':''}>Не назначен</option></select>
 
         ${F.view==='list'?`<select class="sel" id="fSort">${SORTS.map(s=>`<option value="${s.id}" ${F.sort===s.id?'selected':''}>${s.name}</option>`).join('')}</select>`:''}
-        ${F.month?`<span class="fnote">Внедрено в: <b style="color:var(--fg)">${monthName(F.month)}</b> <button data-clear-month="1">✕</button></span>`:''}
+        ${F.month?`<span class="fnote">Выполнено в: <b style="color:var(--fg)">${monthName(F.month)}</b> <button data-clear-month="1">✕</button></span>`:''}
         ${filtersActive?`<span class="fnote">Найдено ${items.length} <button data-reset="1">Сбросить фильтры</button></span>`:''}
       </div>
     </div>
@@ -992,7 +992,7 @@ function openIssue(k, toHistory){
       ${box('Приоритет', esc(PRIO_RU[i.p]||i.p||''))}
       ${box('Тип', esc(TYPE_RU[i.t]||i.t))}
       ${box('Создана', dLong(i.c))}
-      ${i.stage==='done' ? box('Внедрено', dLong(i.doneAt), 'ok') : box('В текущем этапе с', dLong(i.since))}
+      ${i.stage==='done' ? box('Выполнено', dLong(i.doneAt), 'ok') : box('В текущем этапе с', dLong(i.since))}
       ${box('Срок', i.d ? dLong(i.d)+(i.shifts.length?` <span class="dept">· переносился ${i.shifts.length} ${plural(i.shifts.length,'раз','раза','раз')}</span>`:'') : 'Дата не определена')}
       ${i.e ? `<div style="grid-column:1/-1"><span>Эпик</span><b>${esc(i.e)}${epic?' · '+esc(epic):''}</b></div>` : ''}
     </div>
