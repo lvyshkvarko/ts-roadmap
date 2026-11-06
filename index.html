@@ -663,7 +663,7 @@ function itemHtml(i, kind, view){
   let d = null, note = '';
   if (kind==='done') { d = i.doneAt; note = 'выполнено'; }
   else if (kind==='now') { d = i.since; note = i.stage==='blocked' ? 'в блоке с' : 'в работе с'; }
-  else if (i.d) { d = i.d; note = 'срок'; }
+  else if (i.d) { d = i.d; note = 'дедлайн'; }
   return `<div class="row it" data-open="${esc(i.k)}" style="--c:${SC[i.stage]};${ani()}">${dateBlock(d, note)}<span class="p ${kind==='next'?'hollow':''}"></span>${cardHtml(i, view)}</div>`;
 }
 function newBadge(i){ return i.fresh ? `<span class="nb" title="Создана ${dLong(i.c)}"><i></i>Новая · ${agoText(i.age)}</span>` : ''; }
@@ -671,7 +671,7 @@ function rowHtml(i, rightOverride){
   let right = '';
   if (i.stage==='done') right = `<b>${dShort(i.doneAt)}</b>выполнено`;
   else if (['wip','review','blocked'].includes(i.stage)) right = `<b>${dShort(i.since)}</b>в этапе с`;
-  else if (i.d) right = `<b>${dShort(i.d)}</b>срок`;
+  else if (i.d) right = `<b>${dShort(i.d)}</b>дедлайн`;
   else right = `<b>Дата не определена</b>${esc(PRIO_RU[i.p]||'')} приоритет`;
   return `<div class="lr ${i.stage==='done'?'isdone':''}" data-sk="r:${esc(i.k)}" data-open="${esc(i.k)}" style="${ani()}"><span class="pill ${i.stage==='done'?'done':''}" style="--c:${SC[i.stage]}">${SL[i.stage]}</span>
     <div class="m"><div class="tt">${newBadge(i)}${esc(i.title)}</div><div class="sub"><span>${esc(i.k)}</span><span>${whoHtml(i)}</span><span>${esc(CMAP[i.cl].lbl)}</span>${metaIcons(i)}${i.deps.length?`<span style="color:var(--c-wip)">ждёт ${esc(i.deps[0].k)}</span>`:''}</div></div>
@@ -992,8 +992,8 @@ function openIssue(k, toHistory){
       ${box('Приоритет', esc(PRIO_RU[i.p]||i.p||''))}
       ${box('Тип', esc(TYPE_RU[i.t]||i.t))}
       ${box('Создана', dLong(i.c))}
-      ${i.stage==='done' ? box('Выполнено', dLong(i.doneAt), 'ok') : box('В текущем этапе с', dLong(i.since))}
-      ${box('Срок', i.d ? dLong(i.d)+(i.shifts.length?` <span class="dept">· переносился ${i.shifts.length} ${plural(i.shifts.length,'раз','раза','раз')}</span>`:'') : 'Дата не определена')}
+      ${i.stage==='done' ? box('Завершено в Jira', dLong(i.doneAt), 'ok') : box('В текущем этапе с', dLong(i.since))}
+      ${box('Дедлайн', i.d ? dLong(i.d)+(i.shifts.length?` <span class="dept">· переносился ${i.shifts.length} ${plural(i.shifts.length,'раз','раза','раз')}</span>`:'') : 'Дата не определена')}
       ${i.e ? `<div style="grid-column:1/-1"><span>Эпик</span><b>${esc(i.e)}${epic?' · '+esc(epic):''}</b></div>` : ''}
     </div>
     <h5>Кратко</h5><div class="txt">${esc(i.sd || 'Описание в задаче не заполнено.')}${(i.desc||'').length>=395?'…':''}</div>
