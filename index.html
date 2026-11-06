@@ -287,7 +287,7 @@ button{background:none;border:0;cursor:pointer;padding:0}
 .evs{margin-left:14px;display:flex;flex-direction:column;gap:8px}
 .ev{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;background:var(--card2);border-radius:14px;padding:11px 14px;cursor:pointer;animation:rise .4s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*40ms);transition:background .15s,transform .15s}
 .ev:hover{background:var(--line);transform:translateX(3px)}
-.ev .pill{font-size:12.5px;padding:3px 10px;min-width:124px;text-align:center}
+.ev .pill{font-size:12.5px;padding:3px 10px;min-width:132px;text-align:center}
 .evt{font-weight:600;font-size:15.5px;line-height:1.35}
 .evm{font-size:13.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:3px}
 
@@ -698,7 +698,8 @@ function monthEvents(m){
     if (i.c && i.c.slice(0,7)===m) add(i.c, {i, kind:'new', w:1});
     if (i.d && i.d.slice(0,7)===m && i.stage!=='done') add(i.d, {i, kind:'deadline', w:4});
   });
-  Object.values(days).forEach(a=>a.sort((x,y)=>y.w-x.w));
+  const ORD = {new:1, due:2, st:3, done:4, deadline:5};
+  Object.values(days).forEach(a=>a.sort((x,y)=>ORD[x.kind]-ORD[y.kind]));
   return days;
 }
 function evHtml(e){
@@ -706,12 +707,16 @@ function evHtml(e){
   let pill = '', info = '';
   if (e.kind==='done'){ pill = `<span class="pill done" style="--c:var(--c-done)">Внедрено</span>`; info = e.who ? esc(e.who) : ''; }
   else if (e.kind==='st'){ const s = stageOf(e.to); pill = `<span class="pill" style="--c:${SC[s]}">${esc(ru(e.to))}</span>`; info = (e.from?esc(ru(e.from))+' → ':'')+e.chain.map(x=>esc(ru(x))).join(' → ')+(e.who?' · '+esc(e.who):''); }
-  else if (e.kind==='due'){ pill = `<span class="pill" style="--c:var(--c-wip)">Срок</span>`; info = !e.from ? `назначен на ${dLong(e.to)}` : !e.to ? `снят (был ${dLong(e.from)})` : `перенесён: ${dShort(e.from)} → ${dShort(e.to)}`; info += e.who?' · '+esc(e.who):''; }
+  else if (e.kind==='due'){
+    const lbl = !e.from ? 'Срок назначен' : !e.to ? 'Срок снят' : 'Срок изменён';
+    pill = `<span class="pill" style="--c:var(--c-wip)">${lbl}</span>`;
+    info = !e.from ? `новый срок: ${dLong(e.to)}` : !e.to ? `был ${dLong(e.from)}` : `было ${dLong(e.from)} → стало ${dLong(e.to)}`;
+    info += e.who?' · '+esc(e.who):''; }
   else if (e.kind==='new'){ pill = `<span class="pill" style="--c:var(--c-new);color:#06162a">Новая</span>`; info = 'задача создана · сейчас: '+esc(ru(i.st))+(i.who?' · '+esc(i.who):''); }
   else if (e.kind==='deadline'){ const over = i.d < TODAY_S; pill = `<span class="pill" style="--c:var(--c-blocked)">${over?'Срок прошёл':'Дедлайн'}</span>`; info = (over?'не закрыта · ':'')+'сейчас: '+esc(ru(i.st)); }
   return `<div class="ev ${e.kind==='done'?'isdone':''}" data-sk="e:${esc(i.k)}:${e.kind}" data-open="${esc(i.k)}" style="${ani()}">${pill}<div class="evb"><div class="evt">${esc(i.title)}</div><div class="evm"><span>${esc(i.k)}</span>${deptChip(i.dept)}<span>${info}</span></div></div></div>`;
 }
-let MTAB = 'all';
+const MTAB = 'all';
 function monthLadder(){
   const m = MONTH, y = +m.slice(0,4), mo = +m.slice(5,7);
   const n = new Date(y, mo, 0).getDate();
@@ -736,7 +741,8 @@ function monthLadder(){
     const wd = WD[new Date(y, mo-1, d).getDay()];
     if (here) rows += `<div class="row here mh"><div class="d"><b>${d}</b><span>${MON_S[mo-1]}</span></div><span class="p"></span><div class="t">Вы здесь <small>${wd}</small></div></div>`;
     if (list){
-      const top = list[0];
+      const PRIO_K = ['done','deadline','st','due','new'];
+      const top = PRIO_K.map(k=>list.find(e=>e.kind===k)).find(Boolean) || list[0];
       const col = top.kind==='done'?'var(--c-done)':top.kind==='deadline'?'var(--c-blocked)':top.kind==='due'?'var(--c-wip)':top.kind==='st'?SC[stageOf(top.to)]:'var(--c-new)';
       rows += `<div class="row mday" style="--c:${col}"><div class="d">${here?'':`<b>${d}</b><span>${wd}</span>`}</div><span class="p ${here?'none':''}"></span><div class="evs">${list.map(evHtml).join('')}</div></div>`;
     }
@@ -748,8 +754,6 @@ function monthLadder(){
       <div class="mtt"><h3>${mName}</h3><span>${isCur?'карта текущего месяца':isPast?'прошедший месяц':'будущий месяц'} · ${total} ${plural(total,'событие','события','событий')}${cnt('done')?` · внедрено ${cnt('done')}`:''}${cnt('deadline')?` · дедлайнов ${cnt('deadline')}`:''}</span></div>
       <button class="ib" data-mnav="1" aria-label="Следующий месяц"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
       ${!isCur?`<button class="mnow" data-mnav="0">Сегодня</button>`:''}</div>
-    <div class="mtabs"><button class="${isNew?'':'on'}" data-mtab="all">Все события <em>${total}</em></button><button class="${isNew?'on':''}" data-mtab="new"><i></i>Новые задачи <em>${nNew}</em></button></div>
-    ${isNew && !nNew ? `<div class="mempty">В ${MON_P[mo-1]} новых задач ${isCur||isPast?'не создавали':'пока нет'}${isCur?' — как только они появятся в Jira и вы обновите данные, они встанут сюда по дням':''}.</div>`:''}
     <div class="tl mtl">${rows}</div>
   </div>`;
 }
