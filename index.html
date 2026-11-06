@@ -134,6 +134,8 @@ button{background:none;border:0;cursor:pointer;padding:0}
 .it .d b{display:block;font-size:32px;line-height:1;font-weight:800;letter-spacing:-.02em}
 .it .d span{display:block;font-size:19px;color:var(--muted);margin-top:4px}
 .it .d small{display:block;font-size:12px;color:var(--faint);margin-top:4px}
+.it .d small.pre{margin:0 0 5px;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.it .d:has(small.pre){padding-top:2px}
 .it .p{justify-self:center;margin-top:20px;width:24px;height:24px;border-radius:50%;background:var(--bg);border:6px solid var(--c);position:relative;z-index:1}
 .it .p.hollow{border-width:3px}
 .cd{margin-left:20px;background:var(--card);border:1px solid transparent;border-radius:16px;padding:20px 22px;transition:border-color .15s,background .15s;min-width:0}
@@ -659,14 +661,14 @@ function cardHtml(i, view){
 function dateBlock(d, note){
   if (!d) return `<div class="d nd"><small>Дата не определена</small></div>`;
   const y = d.slice(0,4)!==String(TODAY.getFullYear()) ? ' '+d.slice(2,4) : '';
-  return `<div class="d"><b>${+d.slice(8,10)}</b><span>${MON_S[+d.slice(5,7)-1]}${y}</span>${note?`<small>${note}</small>`:''}</div>`;
+  return `<div class="d">${note?`<small class="pre">${note}</small>`:''}<b>${+d.slice(8,10)}</b><span>${MON_S[+d.slice(5,7)-1]}${y}</span></div>`;
 }
 let ANI = 0;
 const ani = ()=>`--i:${Math.min(ANI++,12)}`;
 function itemHtml(i, kind, view){
   let d = null, note = '';
   if (kind==='done') { d = i.doneAt; note = 'выполнено'; }
-  else if (kind==='now') { d = i.since; note = i.stage==='blocked' ? 'в блоке с' : 'в работе с'; }
+  else if (kind==='now') { d = i.since; note = i.stage==='blocked' ? 'в блоке с' : i.stage==='review' ? 'на проверке с' : 'в работе с'; }
   else if (i.d) { d = i.d; note = 'дедлайн'; }
   return `<div class="row it" data-open="${esc(i.k)}" style="--c:${SC[i.stage]};${ani()}">${dateBlock(d, note)}<span class="p ${kind==='next'?'hollow':''}"></span>${cardHtml(i, view)}</div>`;
 }
