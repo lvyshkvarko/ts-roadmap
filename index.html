@@ -339,13 +339,6 @@ button{background:none;border:0;cursor:pointer;padding:0}
 .sheet{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .sheet.on>*{animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
 /* QA bugs */
-.qhome{display:grid;grid-template-columns:96px 1fr;gap:18px;align-items:center;background:var(--card);border-radius:22px;padding:16px 18px;margin-top:26px;animation:rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:.3s}
-.qsq{width:96px;height:96px;border-radius:24px;display:grid;place-items:center;position:relative;transition:transform .15s}
-.qsq:hover{transform:translateY(-2px)}
-.qsq svg{width:40px;height:40px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.qsq .badge{position:absolute;top:8px;right:9px;min-width:24px;height:24px;padding:0 7px;border-radius:12px;background:var(--c-blocked);color:#fff;font-size:13px;font-weight:700;display:grid;place-items:center}
-.qht{display:block;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.qht span{letter-spacing:0;text-transform:none;font-weight:500;color:var(--muted);margin-left:8px;font-size:14px}
 .qsr{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}
 .qs{background:var(--card2);border-radius:12px;padding:9px 12px;text-align:left;transition:transform .18s,background .18s}
 .qs:hover{background:var(--line);transform:translateY(-2px)}
@@ -396,8 +389,35 @@ button{background:none;border:0;cursor:pointer;padding:0}
 .cta.mm svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .qrep{margin-top:4px}
 #qSrv{max-width:240px}
+.asg{display:inline-flex;align-items:center;gap:5px;color:var(--fg);font-weight:600}
+.asg svg{width:14px;height:14px;fill:var(--muted)}
+.asg.none{color:var(--c-wip)}
+.sheet .meta .dchip,.sheet .meta .qtag{max-width:100%;white-space:normal;text-align:left}
+.qtag{white-space:nowrap}
+.sheet .k .qtag,.sheet .k .dchip{font-size:13.5px}
+.qtag{display:inline-flex;align-items:center;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:700;color:#ffb3c1;background:color-mix(in srgb,#e8577a 18%,transparent);border:1px solid color-mix(in srgb,#e8577a 40%,transparent);line-height:1.5;vertical-align:middle}
+.qph{display:flex;align-items:center;gap:12px}
+.qic{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;position:relative;flex:none}
+.qic svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.qic .badge{position:absolute;top:-7px;right:-9px;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--c-blocked);color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;border:2px solid var(--card)}
+.qpt{flex:1;font-size:17px;font-weight:700}
+.qpo{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;color:var(--muted)}
+.qpo:hover{background:var(--card2);color:var(--fg)}
+.qpo svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.qmsw{display:flex;align-items:center;justify-content:space-between;margin:14px 0 2px;background:var(--card2);border-radius:12px;padding:3px}
+.qmsw .ib{width:34px;height:34px;border-radius:10px}
+.qmsw .ib:hover{background:var(--line)}
+.qmsw .ib svg{width:18px;height:18px}
+.qmsw .ib[disabled]{opacity:.3;cursor:default;background:none}
+.qml{font-weight:700;font-size:15px}
+.qsub{font-size:13.5px;color:var(--muted);margin:8px 2px 12px}
+.qmall{color:var(--accent);font-weight:600;font-size:13.5px}
+.qkv{margin-bottom:2px}
+.qkv .wide{grid-column:1/-1}
+.qkv span{display:flex;align-items:center;gap:6px}
+.qkv i{width:8px;height:8px;border-radius:50%;flex:none}
 @media (max-width:1000px){ .qsr{grid-template-columns:repeat(3,1fr)} }
-@media (max-width:640px){ .qhome{grid-template-columns:1fr} .qsq{width:64px;height:64px;border-radius:18px} .qsq svg{width:28px;height:28px} .qsr{grid-template-columns:repeat(2,1fr)} .qr{padding:15px 15px} .qr .ti{font-size:16.5px} }
+@media (max-width:640px){ .qsr{grid-template-columns:repeat(2,1fr)} .qr{padding:15px 15px} .qr .ti{font-size:16.5px} }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
 @media (max-width:1000px){ .home{grid-template-columns:1fr} .stats{grid-template-columns:repeat(3,1fr)} }
@@ -567,6 +587,8 @@ function cleanTitle(s){
 function shortName(n){ return n ? n.replace(/\s*\(.*$/,'').trim() : ''; }
 const DEPT_PREFIX = {'techsupport':'TechSupport','support':'Support','cs support':'Support','server':'Server','gd':'Геймдизайн','web':'Web','cs hub':'Web','qa':'QA','mobile':'Mobile','client':'Client','analytics':'Аналитика','design':'Дизайн'};
 const DEPT_PROJECT = {'CS':'Customer Service','BR':'Black Russia','AN':'Аналитика','WEB':'Web'};
+const DEPT_JIRA = {'gd':'Геймдизайн','analytics':'Аналитика','cs: support':'TechSupport','customer service':'Customer Service'};
+const depJira = d => d ? (DEPT_JIRA[d.toLowerCase()] || d) : '';
 function deptOf(key, summary){
   const m = (summary||'').match(/^\s*\[?([A-Za-z][A-Za-z ]*?)\]?(\s*\[Bug\])?\s*:/);
   if (m && DEPT_PREFIX[m[1].toLowerCase()]) return DEPT_PREFIX[m[1].toLowerCase()];
@@ -574,11 +596,13 @@ function deptOf(key, summary){
   return DEPT_PROJECT[p] || PROJECTS[p] || p;
 }
 const OUR = 'TechSupport';
+const QA_DEPT = 'Передано из MM';
 let PROJECTS = {};
-const DEPT_C = {'TechSupport':'#34c759','Customer Service':'#34c759','Support':'#94d82d','Server':'#4c8dff','Web':'#22b8cf','Геймдизайн':'#f06595','Аналитика':'#b28cff','QA':'#f2a516','Mobile':'#ff922b','Client':'#ffa94d','Дизайн':'#e599f7','Black Russia':'#9aa3ab'};
-const deptColor = d => DEPT_C[d] || '#9aa3ab';
-function deptChip(d, big){ return `<button class="dchip ${big?'big':''}" data-dept="${esc(d)}" title="Показать задачи отдела ${esc(d)}" style="--dc:${deptColor(d)}"><i></i>${esc(d)}</button>`; }
-function whoHtml(i){ return `<span class="wn">${esc(i.who||'Не назначен')}</span>${deptChip(i.dept)}`; }
+const DEPT_C = {'TechSupport':'#34c759','Customer Service':'#34c759','Support':'#94d82d','Server':'#4c8dff','Web':'#22b8cf','Геймдизайн':'#f06595','Аналитика':'#b28cff','QA':'#f2a516','Mobile':'#ff922b','Client':'#ffa94d','Дизайн':'#e599f7','Black Russia':'#9aa3ab','Передано из MM':'#e8577a'};
+const deptColor = d => { if (DEPT_C[d]) return DEPT_C[d]; if (/^client/i.test(d)) return '#ffa94d'; if (/^3d/i.test(d)) return '#20c997'; if (/ux|ui/i.test(d)) return '#e599f7'; if (/не указан/.test(d)) return '#6b7680'; let h=0; for (const c of String(d)) h=(h*31+c.charCodeAt(0))%360; return `hsl(${h} 65% 66%)`; };
+function deptChip(d, big, label){ return `<button class="dchip ${big?'big':''}" data-dept="${esc(d)}" title="Показать задачи: ${esc(d)}" style="--dc:${deptColor(d)}"><i></i>${esc(label||d)}</button>`; }
+function iDept(i, big){ return deptChip(i.dept, big) + (i.isQa ? qaTag(qaPassedBy(i)) : ''); }
+function whoHtml(i){ return `<span class="wn">${esc(i.who||'Не назначен')}</span>${iDept(i)}`; }
 function tidy(d){
   return (d||'').replace(/https?:\/\/\S+/g,'').replace(/\[\^?[^\]]*\]/g,'').replace(/\b(link\s+)?[0-9a-f]{20,}\b/gi,'')
     .replace(/-{3,}/g,' ').replace(/\s[{}]\s/g,' ').replace(/\s+/g,' ').replace(/\s*[\[(]\s*$/,'').trim();
@@ -612,8 +636,8 @@ function normalize(raw){
   const issues = (raw.issues||[]).map(normIssue);
   const by = Object.fromEntries(issues.map(i=>[i.k,i]));
   const tasks = issues.filter(i=>!i.isEpic && i.stage!=='reject');
-  const qby = {}; ((raw.qa&&raw.qa.issues)||[]).forEach(x=>{ const i=normIssue(x); i.cl='qa'; i.isQa=true; qby[i.k]=i; (i.aka||[]).forEach(a=>{ if(!qby[a]) qby[a]=i; }); });
-  return { raw, tasks, by, qby };
+  const qby = {}, qtasks = []; ((raw.qa&&raw.qa.issues)||[]).forEach(x=>{ const i=normIssue(x); i.cl='qa'; i.isQa=true; i.dept = depJira(i.dp) || (i.dept==='Black Russia' ? 'Отдел не указан' : i.dept); qby[i.k]=i; (i.aka||[]).forEach(a=>{ if(!qby[a]) qby[a]=i; }); if (!by[i.k] && !i.isEpic && i.stage!=='reject') qtasks.push(i); });
+  return { raw, tasks, by, qby, qtasks };
 }
 function normIssue(x){
     const i = Object.assign({}, x);
@@ -643,14 +667,14 @@ function normIssue(x){
 let RAW = {issues:[],projects:{},at:''}, DATA = normalize(RAW);
 
 /* ---------- state ---------- */
-const F = { q:'', group:'all', person:'', dept:'', sort:'activity', month:'', view:'timeline' };
+const F = { q:'', group:'all', person:'', dept:'', src:'', sort:'activity', month:'', view:'timeline' };
 try { const v = localStorage.getItem('cs409-view'); if (v==='list'||v==='timeline') F.view = v; } catch(e){}
 const expanded = new Set();
 const app = document.getElementById('app');
 function route(){ const h=(location.hash||'').slice(1); return CMAP[h] ? h : ''; }
 function render(){ ANI = 0; const r=route(); r==='qa' ? renderQa() : r ? renderCat(r) : renderHome(); watchShine(); }
 let PENDING = false;
-function go(cat, patch){ Object.assign(F, {q:'', group:'all', person:'',dept:'', month:''}, patch||{}); expanded.clear(); if (route()===cat) { window.scrollTo(0,0); SCROLL_HERE = true; render(); } else { PENDING = true; location.hash = cat; } }
+function go(cat, patch){ Object.assign(F, {q:'', group:'all', person:'',dept:'', src:'', month:''}, patch||{}); expanded.clear(); if (route()===cat) { window.scrollTo(0,0); SCROLL_HERE = true; render(); } else { PENDING = true; location.hash = cat; } }
 
 const GROUPS = [
   {id:'all', name:'Все', f:()=>true},
@@ -699,7 +723,7 @@ function footHtml(){
 function lastComment(i){ return i.cm.length ? i.cm[i.cm.length-1] : null; }
 function notesHtml(i){
   let h = '';
-  if (i.stage==='done') h += `<div class="note ok">${ico('check')}<span class="tx">Выполнено <b>${dLong(i.doneAt)}</b></span></div>`;
+  if (i.stage==='done') h += `<div class="note ok">${ico('check')}<span class="tx">${i.isQa?'Исправлено в Jira':'Выполнено'} <b>${dLong(i.doneAt)}</b></span></div>`;
   if (i.deps.length) h += `<div class="note warn">${ico('wait')}<span class="tx">Сначала нужно: ${i.deps.slice(0,2).map(d=>`<b>${esc(d.k)}</b> (${esc(ru(d.st))})`).join(', ')}</span></div>`;
   if (i.shifts.length){ const f=i.shifts[0][1], l=i.shifts[i.shifts.length-1][2]; h += `<div class="note warn">${ico('wait')}<span class="tx">Срок переносился ${i.shifts.length} ${plural(i.shifts.length,'раз','раза','раз')}: <b>${dShort(f)}</b> → <b>${dShort(l)}</b></span></div>`; }
   const c = lastComment(i);
@@ -713,7 +737,7 @@ function metaIcons(i){
   return h;
 }
 function cardHtml(i, view){
-  const tag = view==='all' ? CMAP[i.cl].lbl : (toolOf(i) || CMAP[i.cl].lbl);
+  const tag = i.isQa ? 'Баг из QA' : view==='all' ? CMAP[i.cl].lbl : (toolOf(i) || CMAP[i.cl].lbl);
   return `<div class="cd ${i.stage==='done'?'isdone':''}" data-sk="c:${esc(i.k)}">
       <div class="top"><span class="pills"><span class="pill ${i.stage==='done'?'done':''}" style="--c:${SC[i.stage]}">${SL[i.stage]}</span>${newBadge(i)}</span><a class="key" href="${JIRA}${encodeURIComponent(i.k)}" target="_blank" rel="noopener" data-stop="1">${esc(i.k)} ↗</a></div>
       <div class="ti">${esc(i.title)}</div>
@@ -731,7 +755,7 @@ let ANI = 0;
 const ani = ()=>`--i:${Math.min(ANI++,12)}`;
 function itemHtml(i, kind, view){
   let d = null, note = '';
-  if (kind==='done') { d = i.doneAt; note = 'выполнено'; }
+  if (kind==='done') { d = i.doneAt; note = i.isQa ? 'исправлено' : 'выполнено'; }
   else if (kind==='now') { d = i.since; note = i.stage==='blocked' ? 'в блоке с' : i.stage==='review' ? 'на проверке с' : 'в работе с'; }
   else if (i.d) { d = i.d; note = 'дедлайн'; }
   return `<div class="row it" data-open="${esc(i.k)}" style="--c:${SC[i.stage]};${ani()}">${dateBlock(d, note)}<span class="p ${kind==='next'?'hollow':''}"></span>${cardHtml(i, view)}</div>`;
@@ -756,7 +780,7 @@ const MON_P = ['январе','феврале','марте','апреле','ма
 function monthEvents(m){
   const days = {};
   const add = (d, ev)=>{ (days[d]=days[d]||[]).push(ev); };
-  DATA.tasks.forEach(i=>{
+  [...DATA.tasks, ...DATA.qtasks].forEach(i=>{
     const byDay = {};
     i.tr.forEach((t,idx)=>{ if (t[0].slice(0,7)===m){ (byDay[t[0]]=byDay[t[0]]||{from: idx>0?i.tr[idx-1][1]:null, chain:[], who:new Set()}); byDay[t[0]].chain.push(t[1]); if(t[2]) byDay[t[0]].who.add(t[2]); } });
     Object.entries(byDay).forEach(([d,v])=>{
@@ -775,16 +799,19 @@ function monthEvents(m){
 function evHtml(e){
   const i = e.i;
   let pill = '', info = '';
-  if (e.kind==='done'){ pill = `<span class="pill done" style="--c:var(--c-done)">Выполнено</span>`; info = e.who ? esc(e.who) : ''; }
-  else if (e.kind==='st'){ const s = stageOf(e.to); pill = `<span class="pill" style="--c:${SC[s]}">${esc(ru(e.to))}</span>`; info = (e.from?esc(ru(e.from))+' → ':'')+e.chain.map(x=>esc(ru(x))).join(' → ')+(e.who?' · '+esc(e.who):''); }
+  // кто менял: без исполнителя, если он уже показан рядом
+  const others = (e.who||'').split(', ').filter(n=>n && !(i.dept===OUR && n===i.who));
+  const by = others.length ? (i.dept===OUR ? 'изменил(а): ' : '')+esc(others.join(', ')) : '';
+  if (e.kind==='done'){ pill = `<span class="pill done" style="--c:var(--c-done)">${i.isQa?'Исправлено':'Выполнено'}</span>`; info = by; }
+  else if (e.kind==='st'){ const s = stageOf(e.to); pill = `<span class="pill" style="--c:${SC[s]}">${esc(ru(e.to))}</span>`; info = (e.from?esc(ru(e.from))+' → ':'')+e.chain.map(x=>esc(ru(x))).join(' → ')+(by?' · '+by:''); }
   else if (e.kind==='due'){
     const lbl = !e.from ? 'Срок назначен' : !e.to ? 'Срок снят' : 'Срок изменён';
     pill = `<span class="pill" style="--c:var(--c-wip)">${lbl}</span>`;
     info = !e.from ? `новый срок: ${dLong(e.to)}` : !e.to ? `был ${dLong(e.from)}` : `было ${dLong(e.from)} → стало ${dLong(e.to)}`;
-    info += e.who?' · '+esc(e.who):''; }
-  else if (e.kind==='new'){ pill = `<span class="pill" style="--c:var(--c-new);color:#06162a">Новая</span>`; info = 'задача создана · сейчас: '+esc(ru(i.st))+(i.who?' · '+esc(i.who):''); }
+    info += by?' · '+by:''; }
+  else if (e.kind==='new'){ pill = `<span class="pill" style="--c:var(--c-new);color:#06162a">Новая</span>`; info = (i.isQa?'заведена тестировщиками':'задача создана')+' · сейчас: '+esc(ru(i.st))+(i.who&&i.dept!==OUR?' · '+esc(i.who):''); }
   else if (e.kind==='deadline'){ const over = i.d < TODAY_S; pill = `<span class="pill" style="--c:var(--c-blocked)">${over?'Срок прошёл':'Дедлайн'}</span>`; info = (over?'не закрыта · ':'')+'сейчас: '+esc(ru(i.st)); }
-  return `<div class="ev ${e.kind==='done'?'isdone':''}" data-sk="e:${esc(i.k)}:${e.kind}" data-open="${esc(i.k)}" style="${ani()}">${pill}<div class="evb"><div class="evt">${esc(i.title)}</div><div class="evm"><span>${esc(i.k)}</span>${deptChip(i.dept)}<span>${info}</span></div></div></div>`;
+  return `<div class="ev ${e.kind==='done'?'isdone':''}" data-sk="e:${esc(i.k)}:${e.kind}" data-open="${esc(i.k)}" style="${ani()}">${pill}<div class="evb"><div class="evt">${esc(i.title)}</div><div class="evm"><span>${esc(i.k)}</span>${iDept(i)}${i.dept===OUR?`<span class="asg ${i.who?'':'none'}">${PERSON}${i.who?esc(i.who):'Исполнитель не назначен'}</span>`:''}${info?`<span>${info}</span>`:''}</div></div></div>`;
 }
 const MTAB = 'all';
 function monthLadder(){
@@ -860,7 +887,7 @@ function renderHome(){
   const cnt = g=>t.filter(GMAP[g].f).length;
   const review = t.filter(i=>i.stage==='review').length;
   const tiles = CATS.map(c=>{
-    const items = c.id==='all' ? t : t.filter(i=>i.cl===c.id);
+    const items = c.id==='all' ? [...t, ...DATA.qtasks] : t.filter(i=>i.cl===c.id);
     const done = items.filter(i=>i.stage==='done').length;
     const active = items.filter(i=>['wip','review'].includes(i.stage)).length;
     return `<a class="tile" href="#${c.id}" data-tile="${c.id}" style="--i:${CATS.indexOf(c)}"><div class="sq" style="background:${c.bg};color:${c.fg}">${svg(c.id)}${active?`<span class="badge" title="Сейчас в работе">${active}</span>`:''}</div><div class="lbl">${esc(c.lbl)}</div><div class="cnt">${done} из ${items.length}</div></a>`;
@@ -886,7 +913,6 @@ function renderHome(){
       <h2 class="hello">Задачи отдела на 2026 год</h2>
       <p class="lead">Направления, текущая работа и очередь. Всё кликабельно и ведёт к задачам.</p>
       <div class="tiles">${tiles}</div>
-      ${qaHomeCard()}
       <div class="stats">
         ${stat('done','готово',cnt('done'),SC.done)}
         ${stat('now','в работе',cnt('now')-review,SC.wip)}
@@ -912,6 +938,7 @@ function renderHome(){
         </div>
         ${mc.map(([m,n])=>`<div class="mbar" data-go="all" data-group="done" data-month="${m}"><span class="l">${MON_F[+m.slice(5,7)-1].slice(0,3)} ${m.slice(2,4)}</span><span class="t"><i style="width:${n/mx*100}%"></i></span><span class="n">${n}</span></div>`).join('')}
       </div>
+      ${qaHomeCard()}
     </aside>
   </div>${footHtml()}</div>`;
 }
@@ -919,14 +946,14 @@ function renderHome(){
 /* ---------- category ---------- */
 function renderCat(id){
   const c = CMAP[id];
-  const base = id==='all' ? DATA.tasks : DATA.tasks.filter(i=>i.cl===id);
+  const base = id==='all' ? (F.src==='road' ? DATA.tasks : F.src==='qa' ? DATA.qtasks : [...DATA.tasks, ...DATA.qtasks]) : DATA.tasks.filter(i=>i.cl===id);
   const pre = filterItems(base, true);
   const items = filterItems(base, false);
   const bDone = base.filter(i=>i.stage==='done').length;
   const pct = base.length ? Math.round(bDone/base.length*100) : 0;
   const people = [...new Set(base.map(i=>i.who).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'ru'));
   const chips = GROUPS.map(g=>`<button class="chip ${F.group===g.id?'on':''}" data-group-set="${g.id}">${g.c?`<i style="background:${g.c}"></i>`:''}${g.name} <em>${pre.filter(g.f).length}</em></button>`).join('');
-  const filtersActive = F.q || F.person || F.dept || F.month || F.group!=='all';
+  const filtersActive = F.q || F.person || F.dept || F.month || F.src || F.group!=='all';
   const _d = F.dept; F.dept=''; const preND = filterItems(base, true); F.dept=_d;
   const depts = [...new Set(base.map(i=>i.dept))].sort((a,b)=>a.localeCompare(b,'ru'));
 
@@ -952,6 +979,7 @@ function renderCat(id){
       <div class="trow">
         <div class="chips">${chips}</div>
       </div>
+      ${id==='all' && DATA.qtasks.length ? `<div class="trow deptrow"><span class="dl">Источник</span>${[['','Все',DATA.tasks.length+DATA.qtasks.length],['road','Роадмап',DATA.tasks.length],['qa','Баги из QA',DATA.qtasks.length]].map(([v,l,n])=>`<button class="chip ${F.src===v?'on':''}" data-src="${v}">${l} <em>${n}</em></button>`).join('')}</div>` : ''}
       ${depts.length>1?`<div class="trow deptrow"><span class="dl">Отдел</span>${depts.map(d=>`<button class="dchip big ${F.dept===d?'on':''} ${F.dept&&F.dept!==d?'off':''}" data-dept="${esc(d)}" style="--dc:${deptColor(d)}"><i></i>${esc(d)} <em>${preND.filter(i=>i.dept===d).length}</em></button>`).join('')}</div>`:''}
       <div class="trow">
         <select class="sel" id="fPerson"><option value="">Все исполнители</option>${people.map(p=>`<option ${F.person===p?'selected':''}>${esc(p)}</option>`).join('')}<option value="—" ${F.person==='—'?'selected':''}>Не назначен</option></select>
@@ -1029,7 +1057,8 @@ CMAP.qa = QAC;
 IC.qa = '<path d="M8.5 8.5a3.5 3.5 0 0 1 7 0"/><rect x="7" y="8.5" width="10" height="11" rx="5"/><path d="M12 12v7.5M3.5 13H7M17 13h3.5M4.5 8.5 7.5 10M19.5 8.5 16.5 10M4.5 19l3-1.8M19.5 19l-3-1.8"/>';
 const MM = 'https://chat.blackhub.team/';
 let QA = (typeof BASE_QA!=='undefined') ? BASE_QA : null;
-const QF = { q:'', st:'all', author:'', server:'', sort:'new' };
+const QF = { q:'', st:'all', author:'', server:'', month:'', sort:'new' };
+let QMONTH = monthKey(0);
 const STAFF_C = ['#34c759','#f06595','#4c8dff','#f2a516','#22b8cf'];
 const QS = {
   stale:{l:'Без ответа', c:'var(--c-blocked)'},
@@ -1045,7 +1074,7 @@ const userName = id => { const u = QA && QA.users && QA.users[id]; return u ? (u
 const userLogin = id => { const u = QA && QA.users && QA.users[id]; return u ? u[0] : ''; };
 function staffColor(id){ const k = (QA&&QA.ours||[]).indexOf(id); return STAFF_C[k<0?4:k%STAFF_C.length]; }
 function staffChip(id){ return `<button class="dchip" data-author="${esc(id)}" title="Заявки сотрудника" style="--dc:${staffColor(id)}"><i></i>${esc(shortStaff(id))}</button>`; }
-function shortStaff(id){ const n = userName(id).split(' '); return n.length>1 ? n[1]+' '+n[0] : n[0]; }
+function shortStaff(id){ return userName(id); }
 function srvName(s){ if(!s) return ''; let x = s.replace(/[№#]/g,'').replace(/\(.*?\)/g,'').replace(/сервер/i,'').trim(); if (/^\d+$/.test(x)) return '№'+x; x = x.toUpperCase(); return /^(ВСЕ|ALL|-|—|НЕТ|НЕ УКАЗАН\w*)$/.test(x) ? '' : x; }
 const mdPlain = s => String(s||'').replace(/!?\[((?:\\.|[^\]\\])*)\]\((https?:[^)\s]*)\)/g,'$1').replace(/\\([\[\]_*~`#>-])/g,'$1').replace(/(\*\*|__|~~|`)/g,'').replace(/:[a-z_][a-z0-9_+-]*:/g,'').trim();
 function qaTitle(r){
@@ -1097,6 +1126,12 @@ function needsAnswer(x, ours){
   const t = last[2]||'';
   return !CLOSE_RE.test(t) && (ASK_RE.test(t) || t.length > 80);
 }
+function qaTag(by){ return `<span class="qtag" title="Задача заведена тестировщиками по заявке из канала QA: Bugs в Mattermost">${by?'Передано из MM ('+esc(by)+')':'Передано из MM'}</span>`; }
+function qaPassedBy(i){
+  const ks = [i.k, ...(i.aka||[])];
+  const ids = [...new Set(qaReports().filter(x=>(x.keys||[]).some(k=>ks.includes(k))).map(x=>x.u))];
+  return ids.map(userName).join(', ');
+}
 function qsPill(x){
   const s = QS[x.qs];
   const l = x.qs==='stale' ? `${s.l} ${x.silent} ${plural(x.silent,'день','дня','дней')}` : s.l;
@@ -1137,14 +1172,25 @@ function qaStats(L){
 }
 function qaHomeCard(){
   const L = qaReports();
-  if (!L.length) return `<div class="qhome" style="--i:9"><a class="qsq" href="#qa" style="background:${QAC.bg};color:${QAC.fg}">${svg('qa')}</a>
-    <div class="qhb"><a href="#qa" class="qht">${esc(QAC.lbl)}</a><div class="small" style="margin-top:8px">Данных из Mattermost пока нет. Нажмите <button data-sync="1" style="color:var(--accent);font-weight:600">⟳ Обновить</button> и выполните шаг с закладкой «Sync QA Bugs».</div></div></div>`;
-  const s = qaStats(L);
-  const b = (st, v, l, c)=>`<button class="qs" data-qgo="${st}"><b style="${st==='stale'&&v?'color:var(--c-blocked)':''}">${v}</b><span><i style="background:${c}"></i>${l}</span></button>`;
-  return `<div class="qhome" style="--i:9">
-    <a class="qsq" href="#qa" style="background:${QAC.bg};color:${QAC.fg}">${svg('qa')}${s.stale?`<span class="badge" title="Без ответа больше ${QA.noReplyDays||7} дней">${s.stale}</span>`:''}</a>
-    <div class="qhb"><a href="#qa" class="qht">${esc(QAC.lbl)} <span>${s.all} ${plural(s.all,'заявка','заявки','заявок')} с ${dLong(QA.since)}</span></a>
-      <div class="qsr">${b('stale',s.stale,'без ответа &gt; '+(QA.noReplyDays||7)+' дн.',QS.stale.c)}${b('wait',s.wait,'ждут QA',QS.wait.c)}${b('jira',s.jira,'в Jira',QS.jira.c)}${b('fixed',s.fixed,'исправлено',QS.fixed.c)}${b('nokey',s.nokey,'ответ без задачи',QS.nokey.c)}</div></div>
+  const head = badge => `<div class="qph"><a class="qic" href="#qa" style="background:${QAC.bg};color:${QAC.fg}">${svg('qa')}${badge||''}</a><a href="#qa" class="qpt">${esc(QAC.lbl)}</a><a href="#qa" class="qpo" aria-label="Открыть все баги"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></a></div>`;
+  if (!L.length) return `<div class="panel qhome">${head('')}<div class="small" style="margin-top:12px">Данных из Mattermost пока нет. Нажмите <button data-sync="1" style="color:var(--accent);font-weight:600">⟳ Обновить</button> и выполните шаг с закладкой «Sync QA Bugs».</div></div>`;
+  const all = QMONTH==='all';
+  const M = all ? L : L.filter(x=>x.d.slice(0,7)===QMONTH);
+  const s = qaStats(M), stAll = L.filter(x=>x.qs==='stale').length;
+  const first = ym(QA.since) || L.map(x=>x.d.slice(0,7)).sort()[0], cur = monthKey(0);
+  const nd = QA.noReplyDays||7;
+  const b = (st, v, l, c, cls)=>`<button class="${cls||''}" data-qgo="${st}" data-qmonth="${all?'':QMONTH}"><b style="color:${v?c:'var(--faint)'}">${v}</b><span><i style="background:${c}"></i>${l}</span></button>`;
+  const mLbl = all ? 'Всё время' : MON_F[+QMONTH.slice(5,7)-1]+' '+QMONTH.slice(0,4);
+  const sub = all ? `Всего с ${dLong(QA.since)}: ${s.all}` : `Передано за месяц: ${s.all}`;
+  return `<div class="panel qhome">
+    ${head(s.all?`<span class="badge" title="${all?'Всего передано в QA':'Передано в QA за '+esc(mLbl.toLowerCase())}">${s.all}</span>`:'')}
+    <div class="qmsw"><button class="ib" data-qmnav="-1" aria-label="Предыдущий месяц" ${all||QMONTH<=first?'disabled':''}><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><span class="qml">${mLbl}</span><button class="ib" data-qmnav="1" aria-label="Следующий месяц" ${all||QMONTH>=cur?'disabled':''}><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="qsub">${sub} · <button class="qmall" data-qmnav="${all?'0':'all'}">${all?'текущий месяц':'всё время'}</button></div>
+    <div class="kv qkv">
+      ${b('stale',s.stale,'без ответа &gt; '+nd+' дн.',QS.stale.c,'wide')}
+      ${b('jira',s.jira,'в Jira',QS.jira.c)}${b('fixed',s.fixed,'исправлено',QS.fixed.c)}
+      ${b('wait',s.wait,'ждут QA',QS.wait.c)}${b('nokey',s.nokey,'без задачи',QS.nokey.c)}
+    </div>
   </div>`;
 }
 function qaHomeAcc(){
@@ -1158,6 +1204,7 @@ function qaFilter(L, ignoreSt){
     if (!ignoreSt && QF.st!=='all' && x.qs!==QF.st) return false;
     if (QF.author && x.u!==QF.author) return false;
     if (QF.server && x.srv!==QF.server) return false;
+    if (QF.month && x.d.slice(0,7)!==QF.month) return false;
     if (q && !x.hay.includes(q)) return false;
     return true;
   });
@@ -1177,14 +1224,16 @@ function renderQa(){
   }
   const L = qaReports();
   const pre = qaFilter(L, true), items = qaFilter(L, false);
-  const s = qaStats(L);
+  const s = qaStats(QF.month ? L.filter(x=>x.d.slice(0,7)===QF.month) : L);
   const sorted = [...items].sort(QSORTS.find(x=>x.id===QF.sort).f);
   const chips = ['all','stale','wait','nokey','jira','fixed','reject'].map(k=>`<button class="chip ${QF.st===k?'on':''}" data-qst="${k}">${k!=='all'?`<i style="background:${QS[k].c}"></i>`:''}${k==='all'?'Все':k==='stale'?'Без ответа > '+(QA.noReplyDays||7)+' дн.':QS[k].l} <em>${k==='all'?pre.length:pre.filter(x=>x.qs===k).length}</em></button>`).join('');
   const _a = QF.author; QF.author=''; const preNA = qaFilter(L, false); QF.author=_a;
   const authors = (QA.ours||[]).map(id=>`<button class="dchip big ${QF.author===id?'on':''} ${QF.author&&QF.author!==id?'off':''}" data-author="${esc(id)}" style="--dc:${staffColor(id)}"><i></i>${esc(shortStaff(id))} <em>${preNA.filter(x=>x.u===id).length}</em></button>`).join('');
   const srvCnt = {}; L.forEach(x=>{ if (x.srv) srvCnt[x.srv]=(srvCnt[x.srv]||0)+1; });
   const servers = Object.keys(srvCnt).sort((a,b)=>srvCnt[b]-srvCnt[a] || a.localeCompare(b,'ru'));
-  const filtersActive = QF.q || QF.author || QF.server || QF.st!=='all';
+  const filtersActive = QF.q || QF.author || QF.server || QF.month || QF.st!=='all';
+  const mCnt = {}; L.forEach(x=>{ const m=x.d.slice(0,7); mCnt[m]=(mCnt[m]||0)+1; });
+  const months = Object.keys(mCnt).sort().reverse();
   const k = 'qa|list', lim = 30, all = expanded.has(k) || !!QF.q;
   let body = '', lastM = '';
   const shown = all ? sorted : sorted.slice(0, lim);
@@ -1203,6 +1252,7 @@ function renderQa(){
       <div class="trow"><div class="chips">${chips}</div></div>
       <div class="trow deptrow"><span class="dl">Кто передал</span>${authors}</div>
       <div class="trow">
+        <select class="sel" id="qMon"><option value="">Все месяцы</option>${months.map(m=>`<option value="${m}" ${QF.month===m?'selected':''}>${monthName(m)} · ${mCnt[m]}</option>`).join('')}</select>
         <select class="sel" id="qSrv"><option value="">Все серверы</option>${servers.map(x=>`<option value="${esc(x)}" ${QF.server===x?'selected':''}>${esc(x)} · ${srvCnt[x]}</option>`).join('')}</select>
         <select class="sel" id="qSort">${QSORTS.map(x=>`<option value="${x.id}" ${QF.sort===x.id?'selected':''}>${x.name}</option>`).join('')}</select>
         ${filtersActive?`<span class="fnote">Найдено ${items.length} <button data-qreset="1">Сбросить фильтры</button></span>`:''}
@@ -1213,6 +1263,7 @@ function renderQa(){
     ${qaFootHtml()}</div>`;
   const qq = document.getElementById('qq');
   if (qq){ let tm; qq.addEventListener('input', ()=>{ clearTimeout(tm); tm=setTimeout(()=>{ QF.q=qq.value.trim(); const pos=qq.selectionStart; render(); const n=document.getElementById('qq'); if(n){ n.focus(); try{n.setSelectionRange(pos,pos);}catch(e){} } },220); }); }
+  const qm = document.getElementById('qMon'); if (qm) qm.addEventListener('change', ()=>{ QF.month=qm.value; expanded.clear(); render(); });
   const sv = document.getElementById('qSrv'); if (sv) sv.addEventListener('change', ()=>{ QF.server=sv.value; render(); });
   const so = document.getElementById('qSort'); if (so) so.addEventListener('change', ()=>{ QF.sort=so.value; render(); });
 }
@@ -1227,7 +1278,7 @@ function openReport(id){
   const sec = (h, v)=>v?`<h5>${h}</h5><div class="txt">${esc(v)}</div>`:'';
   const iss = (x.keys||[]).map(k=>{ const i = DATA.qby[k];
     if (!i) return `<div class="lk" data-open="${esc(k)}"><span class="t">Задача QA</span><span class="s"><b>${esc(k)}</b>Данные появятся после обновления из Jira</span><span></span><span></span></div>`;
-    return `<div class="lk" data-open="${esc(k)}"><span class="t">${esc(i.who||'Не назначен')}</span><span class="s"><b>${esc(k)}</b>${esc(cleanTitle(i.s))}</span>${deptChip(i.dept)}${jiraPill(i)}</div>`; }).join('');
+    return `<div class="lk" data-open="${esc(k)}"><span class="t">${esc(i.who||'Не назначен')}</span><span class="s"><b>${esc(k)}</b>${esc(cleanTitle(i.s))}</span>${iDept(i)}${jiraPill(i)}</div>`; }).join('');
   const th = x.replies.map((m,n)=>(x.cut && n===3 ? `<div class="small" style="margin:4px 0 10px">… ещё ${x.nReplies-8} ${plural(x.nReplies-8,'сообщение','сообщения','сообщений')} — полностью в Mattermost …</div>` : '')+`<div class="cm ${ours.has(m[1])?'our':'qa'}"><div class="h"><b>${esc(userName(m[1]))}</b> · ${esc(fmtDT(m[0]))}${ours.has(m[1])?' · наш сотрудник':''}</div><div class="x">${esc(mdPlain(m[2]))}</div></div>`).join('');
   const ev = (x.evidence||[]).map(u=>`<a class="ev-l" href="${esc(u)}" target="_blank" rel="noopener">${esc(u.replace(/^https?:\/\//,'').slice(0,60))}</a>`).join('');
   openSheet(`
@@ -1286,12 +1337,13 @@ function openIssue(k, toHistory){
   const cms = [...i.cm].reverse().map(c=>`<div class="cm"><div class="h"><b>${esc(c[1])}</b> · ${dLong(c[0])}</div><div class="x">${esc(c[2])}</div></div>`).join('');
   const epic = i.e && DATA.by[i.e] ? cleanTitle(DATA.by[i.e].s) : '';
   openSheet(`
-    <div class="k"><span class="pill ${i.stage==='done'?'done':''}" style="--c:${SC[i.stage]}">${SL[i.stage]}</span>${deptChip(i.dept, true)}<span>${esc(i.k)} · ${esc(c.name)}</span></div>
+    <div class="k"><span class="pill ${i.stage==='done'?'done':''}" style="--c:${SC[i.stage]}">${SL[i.stage]}</span>${iDept(i, true)}<span>${esc(i.k)} · ${esc(c.name)}</span></div>
     <h2>${esc(i.title)}</h2>
     <div class="meta">
       ${box('Статус в Jira', esc(ru(i.st)))}
       ${box('Исполнитель', esc(i.who||'Не назначен'))}
       ${box('Отдел', deptChip(i.dept))}
+      ${i.isQa ? box('Передано из MM', esc(qaPassedBy(i)||'—')) : ''}
       ${box('Приоритет', esc(PRIO_RU[i.p]||i.p||''))}
       ${box('Тип', esc(TYPE_RU[i.t]||i.t))}
       ${box('Создана', dLong(i.c))}
@@ -1310,7 +1362,7 @@ function openIssue(k, toHistory){
   if (toHistory){ const h=document.getElementById('histH'); if (h) setTimeout(()=>{ sheet.scrollTop = h.offsetTop - 20; }, 60); }
 }
 
-const SCRIPT_RAW = "(async()=>{\nconst o=location.origin;\nconst ui=document.createElement('div');\nui.style.cssText='position:fixed;top:20px;right:20px;z-index:2147483647;background:#16191c;color:#eef1f3;border:1px solid #333;border-radius:14px;padding:18px;width:400px;font:14px/1.45 system-ui,sans-serif;box-shadow:0 14px 44px rgba(0,0,0,.4)';\ndocument.body.appendChild(ui);\nconst say=t=>{ui.textContent=t};\nsay('Собираю задачи эпика…');\ntry{\nif(!/jira\\.blackhub\\.team$/.test(location.hostname))throw new Error('Откройте страницу jira.blackhub.team и нажмите ещё раз');\nconst g=u=>fetch(o+u,{credentials:'include'}).then(r=>{if(!r.ok)throw new Error('Jira ответила '+r.status);return r.json()});\nconst root='CS-409';\nconst me=await g('/rest/api/2/myself');\nconst ep=await g('/rest/api/2/issue/'+root+'?fields=issuelinks');\nconst links=(ep.fields.issuelinks||[]).map(l=>l.outwardIssue||l.inwardIssue).filter(Boolean);\nconst epics=[root].concat(links.filter(i=>/epic|эпик/i.test(i.fields.issuetype.name)&&((i.fields.status||{}).statusCategory||{}).key!=='done').map(i=>i.key));\nconst jql='key = '+root+' OR \"Epic Link\" in ('+epics.join(',')+')'+(links.length?' OR key in ('+links.map(i=>i.key).join(',')+')':'')+' ORDER BY key';\nlet all=[],s=0;\nfor(;;){\nconst r=await fetch(o+'/rest/api/2/search',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({jql,startAt:s,maxResults:50,expand:['changelog'],fields:['summary','status','assignee','priority','issuetype','created','updated','resolutiondate','duedate','description','customfield_10100','comment','issuelinks','fixVersions']})}).then(r=>r.json());\nif(r.errorMessages&&r.errorMessages.length)throw new Error(r.errorMessages.join('; '));\nall=all.concat(r.issues);s+=r.issues.length;say('Загружено '+s+' из '+r.total+'…');\nif(s>=r.total||!r.issues.length)break;\n}\nconst clean=(t,n)=>(t||'').replace(/\\[~([^\\]]+)\\]/g,'@$1').replace(/\\[([^|\\]]*)\\|[^\\]]*\\]/g,'$1').replace(/\\{[^}]*\\}|!\\S+!|h\\d\\.\\s*|[*_#|]/g,' ').replace(/\\s+/g,' ').trim().slice(0,n);\nconst nm=a=>((a||{}).displayName||'').split(' (')[0].split('(')[0].trim();\nconst mapIssue=i=>{\nconst f=i.fields;const tr=[];const dd=[];\n((i.changelog||{}).histories||[]).forEach(h=>h.items.forEach(it=>{if(it.field==='status')tr.push([h.created.slice(0,10),it.toString,nm(h.author)]);if(it.field==='duedate')dd.push([h.created.slice(0,10),(it.from||'').slice(0,10),(it.to||'').slice(0,10),nm(h.author)])}));\ndd.sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:0);\ntr.sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:0);\nconst cm=((f.comment||{}).comments||[]).slice(-6).map(c=>[c.created.slice(0,10),nm(c.author),clean(c.body,500)]).filter(c=>c[2]);\nconst ln=(f.issuelinks||[]).map(l=>{const x=l.outwardIssue||l.inwardIssue;if(!x)return null;const xf=x.fields||{};return{t:l.outwardIssue?l.type.outward:l.type.inward,k:x.key,s:xf.summary||'',st:(xf.status||{}).name||'',sc:((xf.status||{}).statusCategory||{}).key||''}}).filter(Boolean);\nreturn{k:i.key,s:f.summary,st:f.status.name,sc:f.status.statusCategory.key,t:f.issuetype.name,a:f.assignee?f.assignee.displayName:null,p:f.priority?f.priority.name:null,c:f.created.slice(0,10),u:f.updated.slice(0,10),r:f.resolutiondate?f.resolutiondate.slice(0,10):null,d:f.duedate,e:f.customfield_10100||null,desc:clean(f.description,400),tr,dd,cm,ln,fv:(f.fixVersions||[]).map(v=>[v.name,v.releaseDate||null,!!v.released])};\n};\nconst issues=all.map(mapIssue);\nlet qa=null,qaNote='';\nconst QA_URL='__QAURL__';\nif(/^https?:/.test(QA_URL)){try{\nsay('Загружаю список багов из QA…');\nconst q=await fetch(QA_URL+'?t='+Date.now()).then(r=>r.ok?r.json():null);\nconst keys=[...new Set(((q&&q.reports)||[]).flatMap(r=>r.keys||[]))];\nconst got=[];\nfor(let n=0;n<keys.length;n+=60){\nconst part=keys.slice(n,n+60);\nconst r=await fetch(o+'/rest/api/2/search',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({jql:'key in ('+part.join(',')+')',validateQuery:false,startAt:0,maxResults:100,expand:['changelog'],fields:['summary','status','assignee','priority','issuetype','created','updated','resolutiondate','duedate','description','comment','fixVersions']})}).then(r=>r.json());\nif(!r.issues&&r.errorMessages)throw new Error(r.errorMessages.join('; '));(r.issues||[]).forEach(i=>got.push(mapIssue(i)));say('Задачи из QA: '+got.length+' из '+keys.length+'…');\n}\nconst have=new Set(got.map(i=>i.k));\nfor(const k of keys.filter(k=>!have.has(k))){try{\nconst r=await fetch(o+'/rest/api/2/issue/'+k+'?expand=changelog&fields=summary,status,assignee,priority,issuetype,created,updated,resolutiondate,duedate,description,comment,fixVersions',{credentials:'include'});\nif(!r.ok)continue;const m=mapIssue(await r.json());if(m.k===k)continue;\nconst ex=got.find(i=>i.k===m.k);if(ex){(ex.aka=ex.aka||[]).push(k)}else{m.aka=[k];got.push(m);have.add(m.k)}\n}catch(e){}}\nqa={at:new Date().toISOString(),src:q?q.at:null,issues:got};qaNote=' + '+got.length+' задач из QA';\n}catch(e){qaNote=' (задачи из QA не загрузились: '+e.message+')'}}\nsay('Загружаю названия проектов…');const pks=[...new Set(issues.map(i=>i.k.split('-')[0]).concat(...issues.map(i=>i.ln.map(l=>l.k.split('-')[0]))))];const projects={};for(const p of pks){try{const pr=await g('/rest/api/2/project/'+p);projects[p]=pr.name}catch(e){}}\nconst out=JSON.stringify({v:2,root,epics,at:new Date().toISOString(),by:nm(me),projects,issues,qa});\nwindow.__cs409=out;\nui.innerHTML='';\nconst h=document.createElement('div');h.style.cssText='font-weight:600;margin-bottom:10px';h.textContent='Готово: '+issues.length+' задач'+qaNote+'. Скопируйте и вставьте на роадмап.';\nconst ta=document.createElement('textarea');ta.value=out;ta.readOnly=true;ta.style.cssText='width:100%;height:70px;font:11px monospace;margin-bottom:10px;background:#0e1113;color:#aaa;border:1px solid #333;border-radius:8px';\nconst b=document.createElement('button');b.textContent='Скопировать';b.style.cssText='background:#31c46b;color:#06140b;border:0;border-radius:999px;padding:9px 18px;font-weight:700;cursor:pointer;margin-right:8px';\nb.onclick=async()=>{try{await navigator.clipboard.writeText(out)}catch(e){ta.select();document.execCommand('copy')}b.textContent='Скопировано ✓'};\nconst x=document.createElement('button');x.textContent='Закрыть';x.style.cssText='background:#2a2f34;color:#ddd;border:0;border-radius:999px;padding:9px 18px;cursor:pointer';x.onclick=()=>ui.remove();\nui.append(h,ta,b,x);\n}catch(e){say('Ошибка: '+e.message);const x=document.createElement('button');x.textContent='Закрыть';x.style.cssText='display:block;margin-top:10px';x.onclick=()=>ui.remove();ui.appendChild(x)}\n})();\n";
+const SCRIPT_RAW = "(async()=>{\nconst o=location.origin;\nconst ui=document.createElement('div');\nui.style.cssText='position:fixed;top:20px;right:20px;z-index:2147483647;background:#16191c;color:#eef1f3;border:1px solid #333;border-radius:14px;padding:18px;width:400px;font:14px/1.45 system-ui,sans-serif;box-shadow:0 14px 44px rgba(0,0,0,.4)';\ndocument.body.appendChild(ui);\nconst say=t=>{ui.textContent=t};\nsay('Собираю задачи эпика…');\ntry{\nif(!/jira\\.blackhub\\.team$/.test(location.hostname))throw new Error('Откройте страницу jira.blackhub.team и нажмите ещё раз');\nconst g=u=>fetch(o+u,{credentials:'include'}).then(r=>{if(!r.ok)throw new Error('Jira ответила '+r.status);return r.json()});\nconst root='CS-409';\nconst me=await g('/rest/api/2/myself');\nconst ep=await g('/rest/api/2/issue/'+root+'?fields=issuelinks');\nconst links=(ep.fields.issuelinks||[]).map(l=>l.outwardIssue||l.inwardIssue).filter(Boolean);\nconst epics=[root].concat(links.filter(i=>/epic|эпик/i.test(i.fields.issuetype.name)&&((i.fields.status||{}).statusCategory||{}).key!=='done').map(i=>i.key));\nconst jql='key = '+root+' OR \"Epic Link\" in ('+epics.join(',')+')'+(links.length?' OR key in ('+links.map(i=>i.key).join(',')+')':'')+' ORDER BY key';\nlet all=[],s=0;\nfor(;;){\nconst r=await fetch(o+'/rest/api/2/search',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({jql,startAt:s,maxResults:50,expand:['changelog'],fields:['summary','status','assignee','priority','issuetype','created','updated','resolutiondate','duedate','description','customfield_10100','comment','issuelinks','fixVersions','customfield_10311']})}).then(r=>r.json());\nif(r.errorMessages&&r.errorMessages.length)throw new Error(r.errorMessages.join('; '));\nall=all.concat(r.issues);s+=r.issues.length;say('Загружено '+s+' из '+r.total+'…');\nif(s>=r.total||!r.issues.length)break;\n}\nconst clean=(t,n)=>(t||'').replace(/\\[~([^\\]]+)\\]/g,'@$1').replace(/\\[([^|\\]]*)\\|[^\\]]*\\]/g,'$1').replace(/\\{[^}]*\\}|!\\S+!|h\\d\\.\\s*|[*_#|]/g,' ').replace(/\\s+/g,' ').trim().slice(0,n);\nconst nm=a=>((a||{}).displayName||'').split(' (')[0].split('(')[0].trim();\nconst mapIssue=i=>{\nconst f=i.fields;const tr=[];const dd=[];\n((i.changelog||{}).histories||[]).forEach(h=>h.items.forEach(it=>{if(it.field==='status')tr.push([h.created.slice(0,10),it.toString,nm(h.author)]);if(it.field==='duedate')dd.push([h.created.slice(0,10),(it.from||'').slice(0,10),(it.to||'').slice(0,10),nm(h.author)])}));\ndd.sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:0);\ntr.sort((a,b)=>a[0]<b[0]?-1:a[0]>b[0]?1:0);\nconst cm=((f.comment||{}).comments||[]).slice(-6).map(c=>[c.created.slice(0,10),nm(c.author),clean(c.body,500)]).filter(c=>c[2]);\nconst ln=(f.issuelinks||[]).map(l=>{const x=l.outwardIssue||l.inwardIssue;if(!x)return null;const xf=x.fields||{};return{t:l.outwardIssue?l.type.outward:l.type.inward,k:x.key,s:xf.summary||'',st:(xf.status||{}).name||'',sc:((xf.status||{}).statusCategory||{}).key||''}}).filter(Boolean);\nreturn{k:i.key,s:f.summary,st:f.status.name,sc:f.status.statusCategory.key,t:f.issuetype.name,a:f.assignee?f.assignee.displayName:null,p:f.priority?f.priority.name:null,c:f.created.slice(0,10),u:f.updated.slice(0,10),r:f.resolutiondate?f.resolutiondate.slice(0,10):null,d:f.duedate,e:f.customfield_10100||null,desc:clean(f.description,400),tr,dd,cm,ln,fv:(f.fixVersions||[]).map(v=>[v.name,v.releaseDate||null,!!v.released]),dp:(f.customfield_10311||{}).name||null};\n};\nconst issues=all.map(mapIssue);\nlet qa=null,qaNote='';\nconst QA_URL='__QAURL__';\nif(/^https?:/.test(QA_URL)){try{\nsay('Загружаю список багов из QA…');\nconst q=await fetch(QA_URL+'?t='+Date.now()).then(r=>r.ok?r.json():null);\nconst keys=[...new Set(((q&&q.reports)||[]).flatMap(r=>r.keys||[]))];\nconst got=[];\nfor(let n=0;n<keys.length;n+=60){\nconst part=keys.slice(n,n+60);\nconst r=await fetch(o+'/rest/api/2/search',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({jql:'key in ('+part.join(',')+')',validateQuery:false,startAt:0,maxResults:100,expand:['changelog'],fields:['summary','status','assignee','priority','issuetype','created','updated','resolutiondate','duedate','description','comment','fixVersions','customfield_10311']})}).then(r=>r.json());\nif(!r.issues&&r.errorMessages)throw new Error(r.errorMessages.join('; '));(r.issues||[]).forEach(i=>got.push(mapIssue(i)));say('Задачи из QA: '+got.length+' из '+keys.length+'…');\n}\nconst have=new Set(got.map(i=>i.k));\nfor(const k of keys.filter(k=>!have.has(k))){try{\nconst r=await fetch(o+'/rest/api/2/issue/'+k+'?expand=changelog&fields=summary,status,assignee,priority,issuetype,created,updated,resolutiondate,duedate,description,comment,fixVersions,customfield_10311',{credentials:'include'});\nif(!r.ok)continue;const m=mapIssue(await r.json());if(m.k===k)continue;\nconst ex=got.find(i=>i.k===m.k);if(ex){(ex.aka=ex.aka||[]).push(k)}else{m.aka=[k];got.push(m);have.add(m.k)}\n}catch(e){}}\nqa={at:new Date().toISOString(),src:q?q.at:null,issues:got};qaNote=' + '+got.length+' задач из QA';\n}catch(e){qaNote=' (задачи из QA не загрузились: '+e.message+')'}}\nsay('Загружаю названия проектов…');const pks=[...new Set(issues.map(i=>i.k.split('-')[0]).concat(...issues.map(i=>i.ln.map(l=>l.k.split('-')[0]))))];const projects={};for(const p of pks){try{const pr=await g('/rest/api/2/project/'+p);projects[p]=pr.name}catch(e){}}\nconst out=JSON.stringify({v:2,root,epics,at:new Date().toISOString(),by:nm(me),projects,issues,qa});\nwindow.__cs409=out;\nui.innerHTML='';\nconst h=document.createElement('div');h.style.cssText='font-weight:600;margin-bottom:10px';h.textContent='Готово: '+issues.length+' задач'+qaNote+'. Скопируйте и вставьте на роадмап.';\nconst ta=document.createElement('textarea');ta.value=out;ta.readOnly=true;ta.style.cssText='width:100%;height:70px;font:11px monospace;margin-bottom:10px;background:#0e1113;color:#aaa;border:1px solid #333;border-radius:8px';\nconst b=document.createElement('button');b.textContent='Скопировать';b.style.cssText='background:#31c46b;color:#06140b;border:0;border-radius:999px;padding:9px 18px;font-weight:700;cursor:pointer;margin-right:8px';\nb.onclick=async()=>{try{await navigator.clipboard.writeText(out)}catch(e){ta.select();document.execCommand('copy')}b.textContent='Скопировано ✓'};\nconst x=document.createElement('button');x.textContent='Закрыть';x.style.cssText='background:#2a2f34;color:#ddd;border:0;border-radius:999px;padding:9px 18px;cursor:pointer';x.onclick=()=>ui.remove();\nui.append(h,ta,b,x);\n}catch(e){say('Ошибка: '+e.message);const x=document.createElement('button');x.textContent='Закрыть';x.style.cssText='display:block;margin-top:10px';x.onclick=()=>ui.remove();ui.appendChild(x)}\n})();\n";
 let QA_URL = ''; try { if (/^https?:$/.test(location.protocol)) QA_URL = new URL('qa.json', location.href.split('#')[0].split('?')[0]).href; } catch(e){}
 const SCRIPT = SCRIPT_RAW.replace("'__QAURL__'", JSON.stringify(QA_URL));
 const MMSCRIPT = "(async()=>{\nconst SINCE='2026-01-01', USERS=['l.vyshkvarko','n.lebedeva','v.stepanov'], CH='qa---bugs', TEAM='blackhub', NOREPLY_DAYS=7;\nconst ui=document.createElement('div');\nui.style.cssText='position:fixed;top:20px;right:20px;z-index:2147483647;background:#16191c;color:#eef1f3;border:1px solid #333;border-radius:14px;padding:18px;width:420px;font:14px/1.45 system-ui,sans-serif;box-shadow:0 14px 44px rgba(0,0,0,.4)';\ndocument.body.appendChild(ui);\nconst say=t=>{ui.textContent=t};\nsay('Собираю заявки из QA: Bugs…');\ntry{\nif(!/chat\\.blackhub\\.team$/.test(location.hostname))throw new Error('Откройте chat.blackhub.team и нажмите ещё раз');\nconst csrf=(document.cookie.match(/MMCSRF=([^;]+)/)||[])[1]||'';\nconst H={'X-Requested-With':'XMLHttpRequest','Content-Type':'application/json','X-CSRF-Token':csrf};\nconst g=u=>fetch(u,{credentials:'include',headers:H}).then(r=>{if(!r.ok)throw new Error('Mattermost ответил '+r.status);return r.json()});\nconst p=(u,b)=>fetch(u,{method:'POST',credentials:'include',headers:H,body:JSON.stringify(b)}).then(r=>{if(!r.ok)throw new Error('Mattermost ответил '+r.status);return r.json()});\nconst me=await g('/api/v4/users/me');\nconst team=await g('/api/v4/teams/name/'+TEAM);\nconst ch=await g('/api/v4/teams/'+team.id+'/channels/name/'+CH);\nconst ours=await p('/api/v4/users/usernames',USERS);\nconst ourIds=new Set(ours.map(u=>u.id));\nconst sinceTs=new Date(SINCE+'T00:00:00').getTime();\nconst found={};\nconst day=864e5, iso=ts=>{const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};\nconst tz=-new Date().getTimezoneOffset()*60;\nasync function collect(u,a,b){\n  const r=await p('/api/v4/teams/'+team.id+'/posts/search',{terms:'from:'+u+' in:'+CH+' after:'+iso(a-day)+' before:'+iso(b+day),is_or_search:false,time_zone_offset:tz,page:0,per_page:100});\n  const ids=r.order||[];\n  if(ids.length>=100&&b-a>day){const mid=a+Math.floor((b-a)/day/2)*day;await collect(u,a,mid);await collect(u,mid+day,b);return}\n  ids.forEach(id=>{const x=r.posts[id];if(x&&x.channel_id===ch.id&&x.create_at>=sinceTs)found[id]=x});\n  say('Ищу сообщения '+u+'… найдено '+Object.keys(found).length);\n}\nconst todayTs=new Date(iso(Date.now())+'T00:00:00').getTime();\nfor(const u of USERS){\n  let a=sinceTs;\n  while(a<=todayTs){const d=new Date(a);const next=new Date(d.getFullYear(),d.getMonth()+1,1).getTime();await collect(u,a,Math.min(next-day,todayTs));a=next}\n}\nconst all=Object.values(found);\nconst TPLF=[/Суть пробле/i,/Основное/i,/^\\W*Сервер\\s*:/mi,/Ник игрока\\s*:/i,/Платформа\\s*:/i,/Когда произошло\\s*:/i,/Шаги воспроизведения/i,/Влияние/i,/Охват/i];\nconst isTpl=m=>TPLF.filter(r=>r.test(m)).length>=3;\nconst isReminder=m=>/\\/pl\\/[a-z0-9]{26}/.test(m)&&m.replace(/https?:\\/\\/\\S+/g,'').replace(/\\([^)]*\\)/g,'').trim().length<200;\nconst reports=all.filter(x=>!x.root_id&&(x.message||'').trim().length>15&&!isReminder(x.message||''));\nconst remind={};\nall.forEach(x=>{(x.message||'').replace(/\\/pl\\/([a-z0-9]{26})/g,(m,id)=>{if(id!==x.id)remind[id]=(remind[id]||0)+1;return m})});\nconst field=(m,k)=>{const r=new RegExp('^\\\\s*'+k+'\\\\s*:\\\\s*(.+)$','mi');const x=m.match(r);return x?x[1].trim():''};\nconst HEADS=['Основное','Суть проблемы','Влияние','Охват','Частота','Шаги воспроизведения','Доказательства','Комментарий CS','Результат'];\nconst sections=m=>{const o={};let cur=null;(m||'').split('\\n').forEach(line=>{const tt=line.replace(/^[^0-9A-Za-zА-Яа-яЁё]+/,'').replace(/[:：]\\s*$/,'').trim();const tl=tt.toLowerCase();const h=tt.length<40&&HEADS.find(x=>tl===x.toLowerCase()||(x==='Суть проблемы'&&/^суть пробле/.test(tl)));if(h){cur=h;o[cur]=[];return}if(cur)o[cur].push(line)});Object.keys(o).forEach(k=>o[k]=o[k].join('\\n').trim());return o};\nconst clip=(s,n)=>{s=(s||'').replace(/\\s+/g,' ').trim();return s.length>n?s.slice(0,n-1)+'…':s};\nconst keyRe=/jira\\.blackhub\\.team\\/browse\\/([A-Z][A-Z0-9]+-\\d+)|\\[\\\\?\\[?([A-Z][A-Z0-9]+-\\d+)\\\\?\\]|\\b((?:BR|WEB|CS|AN|QA|GD|CL|MOB|SRV|DEV)-\\d{2,6})\\b/g;\nconst fixRe=/исправ\\w*[^\\n\\d]{0,25}(\\d{1,2})[.\\/](\\d{1,2})(?:[.\\/](\\d{2,4}))?/i;\nconst userIds=new Set();\nconst out=[];\nlet i=0;\nconst queue=[...reports];\nasync function worker(){\n  while(queue.length){\n    const r=queue.shift();i++;say('Раскрываю треды… '+i+' из '+reports.length);\n    let replies=[];\n    try{const th=await g('/api/v4/posts/'+r.id+'/thread');replies=th.order.map(id=>th.posts[id]).filter(x=>x.id!==r.id).sort((a,b)=>a.create_at-b.create_at)}catch(e){}\n    userIds.add(r.user_id);replies.forEach(x=>userIds.add(x.user_id));\n    const m=r.message||'';\n    const keys=[];const fixes=[];\n    replies.forEach(x=>{const t=x.message||'';let k;keyRe.lastIndex=0;while((k=keyRe.exec(t))){const key=k[1]||k[2]||k[3];if(key&&!keys.includes(key))keys.push(key)}\n      const f=t.match(fixRe);if(f&&!ourIds.has(x.user_id)){const d=new Date(x.create_at);let y=f[3]?(+f[3]<100?2000+ +f[3]:+f[3]):d.getFullYear();let mo=+f[2],dd=+f[1];if(!f[3]&&mo<d.getMonth()+1-6)y++;if(mo>=1&&mo<=12&&dd>=1&&dd<=31)fixes.push(y+'-'+String(mo).padStart(2,'0')+'-'+String(dd).padStart(2,'0'))}});\n    const qaReplies=replies.filter(x=>!ourIds.has(x.user_id));\n    const sec=sections(m);const section=(mm,name)=>sec[name]||'';\n    const tpl=isTpl(m);\n    const plain=m.replace(/\\*\\*|__|`/g,'').replace(/\\[([^\\]]*)\\]\\([^)]*\\)/g,'$1');\n    const short=tpl?(field(m,'Кратко')||section(m,'Суть проблемы')):plain;\n    const o={id:r.id,at:new Date(r.create_at).toISOString(),u:r.user_id,\n      server:field(m,'Сервер'),ver:field(m,'Версия клиента[^:]*'),platform:field(m,'Платформа'),nick:field(m,'Ник игрока'),when:field(m,'Когда произошло'),release:field(m,'Связано ли с последним релизом'),device:field(m,'Устройство'),\n      short:clip(short,300),impact:clip(section(m,'Влияние'),120),reach:clip(section(m,'Охват'),120),freq:clip(section(m,'Частота'),80),\n      steps:clip(section(m,'Шаги воспроизведения'),500),evidence:((m.match(/https?:\\/\\/\\S+/g)||[]).slice(0,4)),cs:clip(section(m,'Комментарий CS'),300),\n      files:(r.file_ids||[]).length,\n      tpl,raw:tpl?'':clip(plain,700),\n      replies:(replies.length>8?replies.slice(0,3).concat(replies.slice(-5)):replies).map(x=>[new Date(x.create_at).toISOString(),x.user_id,clip(x.message,400)]),cut:replies.length>8,\n      nReplies:replies.length,lastQa:qaReplies.length?new Date(qaReplies[qaReplies.length-1].create_at).toISOString():null,lastAt:replies.length?new Date(replies[replies.length-1].create_at).toISOString():null,firstQa:qaReplies[0]?new Date(qaReplies[0].create_at).toISOString():null,\n      keys,fixBy:fixes.length?fixes[fixes.length-1]:null,remind:remind[r.id]||0};\n    out.push(o);\n  }\n}\nawait Promise.all([worker(),worker(),worker(),worker(),worker()]);\nconst users={};\nconst ul=await p('/api/v4/users/ids',[...userIds]);\nul.forEach(u=>{users[u.id]=[u.username,((u.last_name||'')+' '+(u.first_name||'')).trim()||u.username]});\nout.sort((a,b)=>a.at<b.at?1:-1);\nconst data={v:'qa1',at:new Date().toISOString(),by:((me.last_name||'')+' '+(me.first_name||'')).trim()||me.username,since:SINCE,noReplyDays:NOREPLY_DAYS,team:TEAM,channel:CH,ours:ours.map(u=>u.id),users,reports:out};\nconst txt=JSON.stringify(data);\nwindow.__qa=txt;window.__qaAll=all;\nui.innerHTML='';\nconst h=document.createElement('div');h.style.cssText='font-weight:600;margin-bottom:10px';\nconst noAns=out.filter(x=>!x.firstQa).length;\nh.textContent='Готово: '+out.length+' заявок, из них без ответа QA: '+noAns+'. Скопируйте и вставьте на роадмап.';\nconst ta=document.createElement('textarea');ta.value=txt;ta.readOnly=true;ta.style.cssText='width:100%;height:70px;font:11px monospace;margin-bottom:10px;background:#0e1113;color:#aaa;border:1px solid #333;border-radius:8px';\nconst b=document.createElement('button');b.textContent='Скопировать';b.style.cssText='background:#34c759;color:#06140b;border:0;border-radius:999px;padding:9px 18px;font-weight:700;cursor:pointer;margin-right:8px';\nb.onclick=async()=>{try{await navigator.clipboard.writeText(txt)}catch(e){ta.select();document.execCommand('copy')}b.textContent='Скопировано ✓'};\nconst x=document.createElement('button');x.textContent='Закрыть';x.style.cssText='background:#2a2f34;color:#ddd;border:0;border-radius:999px;padding:9px 18px;cursor:pointer';x.onclick=()=>ui.remove();\nui.append(h,ta,b,x);\n}catch(e){say('Ошибка: '+e.message);const x=document.createElement('button');x.textContent='Закрыть';x.style.cssText='display:block;margin-top:10px';x.onclick=()=>ui.remove();ui.appendChild(x)}\n})();\n";
@@ -1380,22 +1432,24 @@ document.addEventListener('click', async e=>{
   const ac = t.closest('[data-acc]'); if (ac){ const id=ac.dataset.acc; const box=document.querySelector(`[data-acc-box="${id}"]`); const on=!OPEN.has(id); on?OPEN.add(id):OPEN.delete(id); try{localStorage.setItem('cs409-open',JSON.stringify([...OPEN]));}catch(err){} if(box){ box.classList.toggle('on',on); ac.setAttribute('aria-expanded',on); box.querySelectorAll('.lr').forEach((r,k)=>{ r.style.animation='none'; r.offsetHeight; r.style.animation=''; r.style.setProperty('--i',Math.min(k,12)); }); } if (on) setTimeout(watchShine, 200); return; }
   const dc = t.closest('[data-dept]'); if (dc){ e.preventDefault(); e.stopPropagation(); const d = dc.dataset.dept; closeSheet(); const r = route(); if (r){ F.dept = (F.dept===d ? '' : d); expanded.clear(); render(); } else go('all', {dept:d}); return; }
   const au = t.closest('[data-author]'); if (au){ e.preventDefault(); e.stopPropagation(); const id = au.dataset.author; closeSheet(); if (route()==='qa'){ QF.author = QF.author===id ? '' : id; expanded.clear(); render(); } else goQa({author:id}); return; }
-  const qg = t.closest('[data-qgo]'); if (qg){ e.preventDefault(); closeSheet(); return goQa({st:qg.dataset.qgo}); }
+  const qn = t.closest('[data-qmnav]'); if (qn){ const v = qn.dataset.qmnav; if (v==='all') QMONTH='all'; else if (v==='0') QMONTH=monthKey(0); else { const d=new Date(+QMONTH.slice(0,4), +QMONTH.slice(5,7)-1+(+v), 1); QMONTH=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); } const box=document.querySelector('.qhome'); if (box){ const tmp=document.createElement('div'); tmp.innerHTML=qaHomeCard(); const nb=tmp.firstElementChild; nb.style.animation='none'; box.replaceWith(nb); } return; }
+  const qg = t.closest('[data-qgo]'); if (qg){ e.preventDefault(); closeSheet(); return goQa({st:qg.dataset.qgo, month:qg.dataset.qmonth||''}); }
   const qs = t.closest('[data-qst]'); if (qs){ e.preventDefault(); closeSheet(); if (route()!=='qa') return goQa({st:qs.dataset.qst}); QF.st = qs.dataset.qst; expanded.clear(); return render(); }
-  if (t.closest('[data-qreset]')){ Object.assign(QF,{q:'',st:'all',author:'',server:''}); return render(); }
+  if (t.closest('[data-qreset]')){ Object.assign(QF,{q:'',st:'all',author:'',server:'',month:''}); return render(); }
   const hb = t.closest('[data-hist]'); if (hb){ e.preventDefault(); return openIssue(hb.dataset.hist, true); }
   const o = t.closest('[data-open]'); if (o){ e.preventDefault(); return openIssue(o.dataset.open); }
   const qr = t.closest('[data-qa]'); if (qr){ e.preventDefault(); return openReport(qr.dataset.qa); }
   const g = t.closest('[data-go]'); if (g){ e.preventDefault(); closeSheet(); return go(g.dataset.go, {group:g.dataset.group||'all', month:g.dataset.month||''}); }
   const tile = t.closest('[data-tile]'); if (tile){ e.preventDefault(); return go(tile.dataset.tile); }
   const gs = t.closest('[data-group-set]'); if (gs){ F.group = gs.dataset.groupSet; if (F.group!=='done') F.month=''; expanded.clear(); return render(); }
+  const sr = t.closest('[data-src]'); if (sr){ F.src = sr.dataset.src; F.dept=''; expanded.clear(); return render(); }
   const v = t.closest('[data-view]'); if (v){ F.view = v.dataset.view; try{localStorage.setItem('cs409-view',F.view);}catch(err){} return render(); }
   if (t.closest('[data-clear-month]')){ F.month=''; return render(); }
-  if (t.closest('[data-reset]')){ Object.assign(F,{q:'',group:'all',person:'',dept:'',month:''}); return render(); }
+  if (t.closest('[data-reset]')){ Object.assign(F,{q:'',group:'all',person:'',dept:'',src:'',month:''}); return render(); }
   const m = t.closest('[data-more]'); if (m){ const k=m.dataset.more; expanded.has(k)?expanded.delete(k):expanded.add(k); const y=window.scrollY; render(); window.scrollTo(0,y); return; }
 });
-function goQa(patch){ Object.assign(QF, {q:'', st:'all', author:'', server:''}, patch||{}); expanded.clear(); if (route()==='qa'){ window.scrollTo(0,0); render(); } else { PENDING = true; location.hash = 'qa'; } }
-window.addEventListener('hashchange', ()=>{ if (!PENDING){ Object.assign(F,{q:'',group:'all',person:'',dept:'',month:''}); Object.assign(QF,{q:'',st:'all',author:'',server:''}); expanded.clear(); } PENDING=false; closeSheet(); window.scrollTo(0,0); SCROLL_HERE = true; render(); });
+function goQa(patch){ Object.assign(QF, {q:'', st:'all', author:'', server:'', month:''}, patch||{}); expanded.clear(); if (route()==='qa'){ window.scrollTo(0,0); render(); } else { PENDING = true; location.hash = 'qa'; } }
+window.addEventListener('hashchange', ()=>{ if (!PENDING){ Object.assign(F,{q:'',group:'all',person:'',dept:'',src:'',month:''}); Object.assign(QF,{q:'',st:'all',author:'',server:'',month:''}); expanded.clear(); } PENDING=false; closeSheet(); window.scrollTo(0,0); SCROLL_HERE = true; render(); });
 
 /* ---------- data file ---------- */
 const DATA_FILE = 'data.json', QA_FILE = 'qa.json';
